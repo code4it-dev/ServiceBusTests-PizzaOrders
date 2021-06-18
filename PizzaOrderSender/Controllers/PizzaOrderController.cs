@@ -10,9 +10,9 @@ namespace PizzaOrderSender.Controllers
     [Route("[controller]")]
     public class PizzaOrderController : ControllerBase
     {
-        private static string ConnectionString = "";//hidden
+        private static string ConnectionString = "Endpoint=sb://c4it-testbus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=TY+1cmsgcAyiCJOfWRggfNArokAxmyIY1ozZ/RNgR54=";//hidden
 
-        private string QueueName = "PizzaOrders";
+        private string TopicName = "PizzaOrdersTopic";
 
         [HttpPost]
         public async Task<IActionResult> CreateOrder(IEnumerable<PizzaOrder> orders)
@@ -25,7 +25,7 @@ namespace PizzaOrderSender.Controllers
         {
             await using (ServiceBusClient client = new ServiceBusClient(ConnectionString))
             {
-                ServiceBusSender sender = client.CreateSender(QueueName);
+                ServiceBusSender sender = client.CreateSender(TopicName);
 
                 foreach (var order in validOrders)
                 {

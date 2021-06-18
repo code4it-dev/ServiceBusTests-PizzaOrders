@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaOrderSender", "PizzaOrderSender\PizzaOrderSender.csproj", "{3E0E4273-1B4C-4CED-99BF-B6373C64B70B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaChef", "PizzaChef\PizzaChef.csproj", "{7EEE1956-695A-4041-B6D8-8355BC2D9EB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaChef", "PizzaChef\PizzaChef.csproj", "{7EEE1956-695A-4041-B6D8-8355BC2D9EB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaOrderInvoices", "PizzaOrderInvoices\PizzaOrderInvoices.csproj", "{AF965440-1842-47E9-B05E-332E29684BFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{7EEE1956-695A-4041-B6D8-8355BC2D9EB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EEE1956-695A-4041-B6D8-8355BC2D9EB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EEE1956-695A-4041-B6D8-8355BC2D9EB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF965440-1842-47E9-B05E-332E29684BFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF965440-1842-47E9-B05E-332E29684BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF965440-1842-47E9-B05E-332E29684BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF965440-1842-47E9-B05E-332E29684BFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

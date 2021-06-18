@@ -3,26 +3,26 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace PizzaChef
+namespace PizzaOrderInvoices
 {
     internal class Program
     {
         private static string ConnectionString = "Endpoint=sb://c4it-testbus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=TY+1cmsgcAyiCJOfWRggfNArokAxmyIY1ozZ/RNgR54=";//hidden
 
         private static string TopicName = "PizzaOrdersTopic";
-        private static string SubscriptionName = "PizzaChefSubscription";
+        private static string SubscriptionName = "PizzaInvoicesSubscription";
 
         private static async Task Main(string[] args)
         {
-            ServiceBusProcessor _editorialMessagesProcessor = null;
+            ServiceBusProcessor _ordersProcessor = null;
             try
             {
                 ServiceBusClient serviceBusClient = new ServiceBusClient(ConnectionString);
 
-                _editorialMessagesProcessor = serviceBusClient.CreateProcessor(TopicName, SubscriptionName); //SPIEGA
-                _editorialMessagesProcessor.ProcessMessageAsync += PizzaItemMessageHandler;
-                _editorialMessagesProcessor.ProcessErrorAsync += PizzaItemErrorHandler;
-                await _editorialMessagesProcessor.StartProcessingAsync();
+                _ordersProcessor = serviceBusClient.CreateProcessor(TopicName, SubscriptionName); //SPIEGA
+                _ordersProcessor.ProcessMessageAsync += PizzaInvoiceMessageHandler;
+                _ordersProcessor.ProcessErrorAsync += PizzaItemErrorHandler;
+                await _ordersProcessor.StartProcessingAsync();
 
                 Console.WriteLine("Waiting for pizza orders");
                 Console.ReadKey();
@@ -33,8 +33,8 @@ namespace PizzaChef
             }
             finally
             {
-                if (_editorialMessagesProcessor != null)
-                    await _editorialMessagesProcessor.StopProcessingAsync();
+                if (_ordersProcessor != null)
+                    await _ordersProcessor.StopProcessingAsync();
             }
         }
 
@@ -43,17 +43,15 @@ namespace PizzaChef
             throw new NotImplementedException();
         }
 
-        private static async Task PizzaItemMessageHandler(ProcessMessageEventArgs args)
+        private static async Task PizzaInvoiceMessageHandler(ProcessMessageEventArgs args)
         {
             try
             {
                 string body = args.Message.Body.ToString();
-                //Console.WriteLine("Received " + body);
 
-                var processedPizza = JsonSerializer.Deserialize<ProcessedPizzaOrder>(body);
+                var processedPizza = JsonSerializer.Deserialize<Pizza>(body);
 
-                Console.WriteLine($"Processing {processedPizza}");
-
+                Console.WriteLine($"Creating invoice for pizza {processedPizza.Name}");
                 // complete the message. messages is deleted from the queue.
                 await args.CompleteMessageAsync(args.Message);
             }
@@ -62,5 +60,10 @@ namespace PizzaChef
                 // handle exception
             }
         }
+    }
+
+    public class Pizza
+    {
+        public string Name { get; set; }
     }
 }
